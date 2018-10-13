@@ -3,8 +3,13 @@ package tw.brad.guessnumber;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
     private int inputPoint = 0;
     private LinkedList<Integer> inputValue = new LinkedList<>();
+    private LinkedList<Integer> answer;
+
+    private ListView listView;
+    private SimpleAdapter simpleAdapter;
+    private LinkedList<HashMap<String,String>> hist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initView();
+        initGame();
+        initListView();
     }
 
     private void initView(){
@@ -43,6 +55,35 @@ public class MainActivity extends AppCompatActivity {
             btnNumber[i] = findViewById(numberRes[i]);
         }
     }
+
+    private void initGame(){
+        answer = createAnswer();
+        clear(null);
+    }
+
+    private void initListView(){
+        listView = findViewById(R.id.main_listview);
+
+        hist = new LinkedList<>();
+        //simpleAdapter = new SimpleAdapter(this, hist);
+        listView.setAdapter(simpleAdapter);
+
+
+    }
+
+    private LinkedList<Integer> createAnswer() {
+        LinkedList<Integer> ret = new LinkedList<>();
+        HashSet<Integer> nums = new HashSet<>();
+        while (nums.size()<4){
+            nums.add((int)(Math.random()*10));
+        }
+        for (Integer i : nums){
+            ret.add(i);
+        }
+        Collections.shuffle(ret);
+        return ret;
+    }
+
 
     // 輸入數字鍵的方法
     public void inputNumber(View view){
