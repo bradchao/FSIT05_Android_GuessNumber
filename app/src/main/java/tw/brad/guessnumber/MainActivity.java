@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
         inputPoint--;
         input[inputPoint].setText("");
-        inputValue.set(inputPoint, -1);
         btnNumber[inputValue.get(inputPoint)].setEnabled(true);
+        inputValue.set(inputPoint, -1);
 
     }
 
